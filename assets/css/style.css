@@ -239,3 +239,32 @@ a.kachel:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgb(23 37 
 .presse img { width: 100%; height: 16rem; object-fit: contain; }
 .fuss { background: var(--braun); color: #f3e7c9; }
 .fuss a { color: #fff; }
+
+/* ---------- Interaktiver Lageplan ---------- */
+.lageplan { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: start; margin-top: 1.5rem; }
+@media (max-width: 52rem) { .lageplan { grid-template-columns: 1fr; } }
+.lp-karte svg { width: 100%; height: auto; display: block; border-radius: var(--radius); border: 1px solid var(--linie); background: #f4f1e2; }
+.lp-ort { cursor: pointer; outline: none; }
+.lp-ort .lp-flaeche { transition: filter .2s, stroke-width .2s; }
+.lp-ort:hover .lp-flaeche, .lp-ort:focus-visible .lp-flaeche { filter: brightness(1.15); stroke: var(--orange); stroke-width: 4; }
+.lp-ort.aktiv .lp-flaeche { stroke: var(--orange); stroke-width: 5; }
+.lp-ort.aktiv .lp-nr { stroke: var(--orange); stroke-width: 3; }
+.js .lp-ort .lp-nr { animation: lp-puls 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.js .lageplan.angetippt .lp-nr { animation: none; }
+@keyframes lp-puls { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+@media (prefers-reduced-motion: reduce) { .js .lp-ort .lp-nr { animation: none; } }
+.lp-zeichen { margin: .75rem 0 0; font-size: .875rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.sym { display: inline-grid; place-items: center; min-width: 1.5rem; height: 1.5rem; border-radius: 50%; border: 2px solid var(--orange); font-weight: 600; font-size: .8rem; color: var(--dunkel); background: #fff; margin-left: .5rem; }
+.sym:first-child { margin-left: 0; }
+.sym.stop { background: #c62828; color: #fff; border-color: #c62828; border-radius: 4px; font-size: .6rem; padding: 0 .3rem; }
+.lp-info { background: #fff; border-radius: var(--radius); padding: 1.25rem 1.5rem; border-top: 4px solid var(--orange); margin-bottom: 1.25rem; scroll-margin-top: 5rem; }
+.lp-info .rolle { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--gold); font-weight: 600; }
+.lp-info h3 { margin: .25rem 0 .75rem; }
+.lp-info figure { margin: 0 0 .9rem; }
+.lp-info img { border-radius: var(--radius); width: 100%; }
+.lp-info p { margin: 0; }
+.js .lageplan .lp-info { display: none; }
+.js .lageplan .lp-info.aktiv { display: block; animation: lp-ein .25s ease-out; }
+@keyframes lp-ein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.lp-weg { font-size: .95rem; }
+.lp-weg p { margin: 0 0 .6rem; }
