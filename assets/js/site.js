@@ -72,4 +72,28 @@
     var start = location.hash.replace('#', '');
     zeigen(document.getElementById(start) && start.indexOf('ort-') === 0 ? start : 'ort-haus2', false);
   });
+
+  // Sprüche im Titelbild: zufälliger Start, danach Wechsel alle 7 Sekunden
+  document.addEventListener('DOMContentLoaded', function () {
+    var ziel = document.querySelector('.held .spruch');
+    var liste = document.querySelectorAll('.sprueche li');
+    if (!ziel || liste.length < 2) return;
+    var sprueche = Array.prototype.map.call(liste, function (li) { return li.textContent.trim(); });
+    var i = Math.floor(Math.random() * sprueche.length);
+    ziel.textContent = sprueche[i];
+    // Bei „Bewegung reduzieren“ nur zufällig auswählen, nicht wechseln
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var pause = false;
+    ziel.addEventListener('mouseenter', function () { pause = true; });
+    ziel.addEventListener('mouseleave', function () { pause = false; });
+    setInterval(function () {
+      if (pause || document.hidden) return;
+      ziel.classList.add('weg');
+      setTimeout(function () {
+        i = (i + 1) % sprueche.length;
+        ziel.textContent = sprueche[i];
+        ziel.classList.remove('weg');
+      }, 600);
+    }, 7000);
+  });
 })();
